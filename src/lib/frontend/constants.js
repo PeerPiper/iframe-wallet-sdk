@@ -1,0 +1,7 @@
+export const CONSTANTS = {
+    OPENED_SIGNAL: "OPENED",
+    KEYS_SYNC: "KEYS_SYNC",
+    WINDOW_SYNC: "WINDOW_SYNC",
+    SAVED_KEYS: "__SAVED_KEY",
+    CLOSING: "CLOSING",
+}
