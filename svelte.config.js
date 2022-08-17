@@ -21,7 +21,7 @@ const config = {
 		},
 		paths: {
 			// change below to your repo name
-			base: '/iframe-wallet-sdk' //  process.env.NODE_ENV == 'production' ? '/dag-jose-kit' : '' // /dag-jose-kit
+			base: '/iframe-wallet-sdk' //  process.env.NODE_ENV == 'production' ? '/iframe-wallet-sdk' : '' // /dag-jose-kit
 		}
 	}
 };
