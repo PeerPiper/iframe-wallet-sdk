@@ -14,7 +14,6 @@
 			if (window.location.origin === window.opener?.origin) {
 				sendOpenerMsg(CONSTANTS.OPENED_SIGNAL, (event) => {
 					// called when the opener replies to our message above
-					console.log('iframe confirmed loaded by opener');
 					pending = false;
 				});
 			}
@@ -36,7 +35,6 @@
 		// Called when user allows a copy of the keys to be imported to another browser window in same origin
 		syncKeys = (e: CustomEvent<any>): void => {
 			sendOpenerMsg({ key: CONSTANTS.WINDOW_SYNC, storedValue: $storedValue }, (event) => {
-				console.log('onComplete', event.data);
 				pending = false;
 				navigateBack();
 			}); // uses same origin, keys are secure
@@ -44,8 +42,6 @@
 
 		window.addEventListener('beforeunload', () => {
 			try {
-				console.log(window.opener?.origin);
-				console.log(window.location.origin);
 				if (window.opener?.origin === window.location.origin)
 					window.opener.postMessage(CONSTANTS.CLOSING);
 				navigateBack();

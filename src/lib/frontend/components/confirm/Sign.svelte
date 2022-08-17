@@ -9,7 +9,6 @@
 	const decoder = new TextDecoder();
 
 	let defConf;
-	console.log({ props });
 </script>
 
 <!-- on:confirmed on:denied -- they just forward the event notification up to <Confirmer /> -->
