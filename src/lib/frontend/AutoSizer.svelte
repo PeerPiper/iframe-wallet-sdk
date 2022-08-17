@@ -15,7 +15,7 @@
 	// 	resolveConnector = resolve;
 	// });
 
-	let walletReady;
+	let connectionReady;
 	let optionalHandlers = {
 		setWidth: (w) => (width = w)
 	};
@@ -25,7 +25,7 @@
 		const connection = new Connection();
 		connector = await connection.init(optionalHandlers);
 
-		walletReady = async () => {
+		connectionReady = async () => {
 			connector.walletReady(); // signal to the connector the wallet has loaded
 		};
 	});
@@ -55,8 +55,8 @@
 </script>
 
 <div class="autosizer" bind:offsetHeight bind:offsetWidth style="max-width: {width}px;">
-	{#if walletReady}
-		<slot {walletReady} {show} {hide} />
+	{#if connectionReady}
+		<slot {connectionReady} {show} {hide} />
 	{/if}
 </div>
 

@@ -62,12 +62,12 @@
 	</div>
 {:else if ImmortalDB}
 	<!-- Auto-resize embedded iframe -->
-	<AutoSizer let:walletReady let:show let:hide>
-		<!-- walletReady gets passed from AutoSizer to GetKeys -->
+	<AutoSizer let:connectionReady let:show let:hide>
+		<!-- connectionReady gets passed from AutoSizer to GetKeys -->
 		<Connector {mounted}>
 			<Confirmer {show} {hide} />
-			{#if walletReady}
-				<GetKeys on:loadedKeys={walletReady} />
+			{#if connectionReady}
+				<GetKeys on:loadedKeys={connectionReady} />
 			{/if}
 		</Connector>
 	</AutoSizer>
