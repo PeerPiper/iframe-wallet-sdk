@@ -13,7 +13,7 @@
 
 <!-- on:confirmed on:denied -- they just forward the event notification up to <Confirmer /> -->
 <!-- https://svelte.dev/tutorial/event-forwarding -->
-<div class="flex flex-col bg-yellow-100 drop-shadow-lg rounded-sm w-auto p-6">
+<div class="flex flex-col bg-yellow-100 drop-shadow-lg rounded-sm w-auto m-4 p-6">
 	<!-- this is default content, override with slot -->
 	<div class="flex-1">
 		<!-- JSON.stringify(, null, 2)   decoder.decode()-->
