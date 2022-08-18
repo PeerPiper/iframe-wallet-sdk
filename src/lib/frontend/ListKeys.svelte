@@ -75,11 +75,6 @@
 {/if}
 
 <style>
-	.full-pubKey {
-		/* display: none; */
-		text-overflow: ellipsis;
-	}
-
 	.keylist {
 		display: flex;
 		flex-direction: row;
@@ -106,9 +101,5 @@
 	}
 	.hide {
 		display: none;
-	}
-	li {
-		list-style: none;
-		font-family: var(--font-mono);
 	}
 </style>

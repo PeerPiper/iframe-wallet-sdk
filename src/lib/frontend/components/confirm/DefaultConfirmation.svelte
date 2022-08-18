@@ -1,7 +1,7 @@
 <script>
 	import Button from '../atomic/Button.svelte';
 
-	export let props;
+	export let props = { method: '', params: {} };
 	export let handleConfirmed;
 	export let handleDenied;
 </script>
