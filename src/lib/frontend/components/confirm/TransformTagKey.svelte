@@ -17,9 +17,9 @@
 <!-- https://svelte.dev/tutorial/event-forwarding -->
 <div class="attention">
 	<!-- this is default content, override with slot -->
-	<div>
-		⚠️ Re-Encrypt {props.params.tag} for
-		<EncodingSelector pubkey={props.params.targetPublicKey} />?
+	<div class="break-all">
+		⚠️ Grant Access to {props.params.tag} for
+		<EncodingSelector pubkey={props.params.targetPublicKey} />
 	</div>
 	<div class="submit">
 		<Button type={'Yes'} clickHandler={handleConfirmed}>Yes</Button>
