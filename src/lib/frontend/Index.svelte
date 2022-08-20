@@ -24,7 +24,11 @@
 	onMount(async () => {
 		({ ImmortalDB } = await import('immortal-db'));
 		const storedString = await ImmortalDB.get(STORED_VALUE, def);
-		$storedValue = JSON.parse(storedString);
+
+		if (storedString) {
+			const parsedVal = JSON.parse(storedString);
+			if (parsedVal.mnemonic || parsedVal.rsajwk) $storedValue = parsedVal;
+		}
 
 		save = () => {
 			ImmortalDB.set(STORED_VALUE, JSON.stringify($storedValue)); // auto save when $storedValue changes
@@ -46,29 +50,31 @@
 </script>
 
 <!-- Based on whether this is the Window.Top (not an iframe) or a Child (iframe) depends on which to show: -->
-{#if ImmortalDB && window == window.top}
-	<!-- NOT an iframe  -->
-	<div class="m-2">
-		{#if mounted && syncing}
-			<!-- Opened handles on:loadedKeys by ALSO syncing them with the opener window -->
-			<Opened let:syncKeys>
-				{#if syncKeys}
-					<GetKeys on:loadedKeys={loadedKeys} on:loadedKeys={syncKeys} />
-				{/if}
-			</Opened>
-		{:else}
-			<GetKeys on:loadedKeys />
-		{/if}
-	</div>
-{:else if ImmortalDB}
-	<!-- Auto-resize embedded iframe -->
-	<AutoSizer let:connectionReady let:show let:hide>
-		<!-- connectionReady gets passed from AutoSizer to GetKeys -->
-		<Connector {mounted}>
-			<Confirmer {show} {hide} />
-			{#if connectionReady}
-				<GetKeys on:loadedKeys={connectionReady} />
+{#if ImmortalDB}
+	{#if window == window.top}
+		<!-- NOT an iframe  -->
+		<div class="m-2">
+			{#if syncing}
+				<!-- Opened handles on:loadedKeys by ALSO syncing them with the opener window -->
+				<Opened let:syncKeys>
+					{#if syncKeys}
+						<GetKeys on:loadedKeys={loadedKeys} on:loadedKeys={syncKeys} />
+					{/if}
+				</Opened>
+			{:else}
+				<GetKeys on:loadedKeys />
 			{/if}
-		</Connector>
-	</AutoSizer>
+		</div>
+	{:else}
+		<!-- Auto-resize embedded iframe -->
+		<AutoSizer let:connectionReady let:show let:hide>
+			<!-- connectionReady gets passed from AutoSizer to GetKeys -->
+			<Connector {mounted}>
+				<Confirmer {show} {hide} />
+				{#if connectionReady}
+					<GetKeys on:loadedKeys={connectionReady} />
+				{/if}
+			</Connector>
+		</AutoSizer>
+	{/if}
 {/if}
