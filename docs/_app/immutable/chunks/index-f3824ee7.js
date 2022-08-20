@@ -1,7 +1,392 @@
-var E={exports:{}};/*!
+var js_cookie = { exports: {} };
+/*!
  * JavaScript Cookie v2.2.1
  * https://github.com/js-cookie/js-cookie
  *
  * Copyright 2006, 2015 Klaus Hartl & Fagner Brack
  * Released under the MIT license
- */(function(s,e){(function(t){var n;if(s.exports=t(),n=!0,!n){var c=window.Cookies,r=window.Cookies=t();r.noConflict=function(){return window.Cookies=c,r}}})(function(){function t(){for(var r=0,o={};r<arguments.length;r++){var d=arguments[r];for(var h in d)o[h]=d[h]}return o}function n(r){return r.replace(/(%[0-9A-Z]{2})+/g,decodeURIComponent)}function c(r){function o(){}function d(a,u,i){if(!(typeof document>"u")){i=t({path:"/"},o.defaults,i),typeof i.expires=="number"&&(i.expires=new Date(new Date*1+i.expires*864e5)),i.expires=i.expires?i.expires.toUTCString():"";try{var l=JSON.stringify(u);/^[\{\[]/.test(l)&&(u=l)}catch{}u=r.write?r.write(u,a):encodeURIComponent(String(u)).replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g,decodeURIComponent),a=encodeURIComponent(String(a)).replace(/%(23|24|26|2B|5E|60|7C)/g,decodeURIComponent).replace(/[\(\)]/g,escape);var p="";for(var w in i)!i[w]||(p+="; "+w,i[w]!==!0&&(p+="="+i[w].split(";")[0]));return document.cookie=a+"="+u+p}}function h(a,u){if(!(typeof document>"u")){for(var i={},l=document.cookie?document.cookie.split("; "):[],p=0;p<l.length;p++){var w=l[p].split("="),f=w.slice(1).join("=");!u&&f.charAt(0)==='"'&&(f=f.slice(1,-1));try{var m=n(w[0]);if(f=(r.read||r)(f,m)||n(f),u)try{f=JSON.parse(f)}catch{}if(i[m]=f,a===m)break}catch{}}return a?i[a]:i}}return o.set=d,o.get=function(a){return h(a,!1)},o.getJSON=function(a){return h(a,!0)},o.remove=function(a,u){d(a,"",t(u,{expires:-1}))},o.defaults={},o.withConverter=c,o}return c(function(){})})})(E);const g=E.exports,U=365,C=L(),T=!!C,F=C?"None":"Lax";function L(){try{return!Boolean(window.top.location.href)}catch{return!0}}class O{constructor({ttl:e=U,secure:t=T,sameSite:n=F}={}){return this.ttl=e,this.secure=t,this.sameSite=n,(async()=>this)()}async get(e){const t=g.get(e);return typeof t=="string"?t:void 0}async set(e,t){g.set(e,t,this._constructCookieParams())}async remove(e){g.remove(e,this._constructCookieParams())}_constructCookieParams(){return{expires:this.ttl,secure:this.secure,sameSite:this.sameSite}}}class A{constructor(e="keyval-store",t="keyval"){this.storeName=t,this._dbp=new Promise((n,c)=>{const r=indexedDB.open(e,1);r.onerror=()=>c(r.error),r.onsuccess=()=>n(r.result),r.onupgradeneeded=()=>{r.result.createObjectStore(t)}})}_withIDBStore(e,t){return this._dbp.then(n=>new Promise((c,r)=>{const o=n.transaction(this.storeName,e);o.oncomplete=()=>c(),o.onabort=o.onerror=()=>r(o.error),t(o.objectStore(this.storeName))}))}}let y;function _(){return y||(y=new A),y}function P(s,e=_()){let t;return e._withIDBStore("readonly",n=>{t=n.get(s)}).then(()=>t.result)}function N(s,e,t=_()){return t._withIDBStore("readwrite",n=>{n.put(e,s)})}function j(s,e=_()){return e._withIDBStore("readwrite",t=>{t.delete(s)})}const M="ImmortalDB",$="key-value-pairs";class q{constructor(e=M,t=$){return this.store=new A(e,t),(async()=>{try{await this.store._dbp}catch(n){if(n.name==="SecurityError")return null;throw n}return this})()}async get(e){const t=await P(e,this.store);return typeof t=="string"?t:void 0}async set(e,t){await N(e,t,this.store)}async remove(e){await j(e,this.store)}}class x{constructor(e){return this.store=e,(async()=>this)()}async get(e){const t=this.store.getItem(e);return typeof t=="string"?t:void 0}async set(e,t){this.store.setItem(e,t)}async remove(e){this.store.removeItem(e)}}class J extends x{constructor(){super(window.localStorage)}}class G extends x{constructor(){super(window.sessionStorage)}}const S=console.log,I="_immortal|",R=typeof window<"u",v=[O];try{R&&window.indexedDB&&v.push(q)}catch{}try{R&&window.localStorage&&v.push(J)}catch{}function D(s,e,t=null){return e in s?s[e]:t}function K(s){const e=new Map;let t=s.slice();for(const n of t){let c=0;for(const r of t)n===r&&(c+=1);c>0&&(e.set(n,c),t=t.filter(r=>r!==n))}return e}class W{constructor(e=v){this.stores=[],this.onReady=(async()=>{this.stores=(await Promise.all(e.map(async t=>{if(typeof t=="object")return t;try{return await new t}catch{return null}}))).filter(Boolean)})()}async get(e,t=null){await this.onReady;const n=`${I}${e}`,c=await Promise.all(this.stores.map(async i=>{try{return await i.get(n)}catch(l){S(l)}})),r=Array.from(K(c).entries());r.sort((i,l)=>i[1]<=l[1]);let o;const[d,h]=D(r,0,[void 0,0]),[a,u]=D(r,1,[void 0,0]);return h>u||h===u&&d!==void 0?o=d:o=a,o!==void 0?(await this.set(e,o),o):(await this.remove(e),t)}async set(e,t){return await this.onReady,e=`${I}${e}`,await Promise.all(this.stores.map(async n=>{try{await n.set(e,t)}catch(c){S(c)}})),t}async remove(e){await this.onReady,e=`${I}${e}`,await Promise.all(this.stores.map(async t=>{try{await t.remove(e)}catch(n){S(n)}}))}}const V=new W;export{O as CookieStore,I as DEFAULT_KEY_PREFIX,v as DEFAULT_STORES,V as ImmortalDB,W as ImmortalStorage,q as IndexedDbStore,J as LocalStorageStore,G as SessionStorageStore};
+ */
+(function(module, exports) {
+  (function(factory) {
+    var registeredInModuleLoader;
+    {
+      module.exports = factory();
+      registeredInModuleLoader = true;
+    }
+    if (!registeredInModuleLoader) {
+      var OldCookies = window.Cookies;
+      var api = window.Cookies = factory();
+      api.noConflict = function() {
+        window.Cookies = OldCookies;
+        return api;
+      };
+    }
+  })(function() {
+    function extend() {
+      var i = 0;
+      var result = {};
+      for (; i < arguments.length; i++) {
+        var attributes = arguments[i];
+        for (var key in attributes) {
+          result[key] = attributes[key];
+        }
+      }
+      return result;
+    }
+    function decode(s) {
+      return s.replace(/(%[0-9A-Z]{2})+/g, decodeURIComponent);
+    }
+    function init(converter) {
+      function api() {
+      }
+      function set2(key, value, attributes) {
+        if (typeof document === "undefined") {
+          return;
+        }
+        attributes = extend({
+          path: "/"
+        }, api.defaults, attributes);
+        if (typeof attributes.expires === "number") {
+          attributes.expires = new Date(new Date() * 1 + attributes.expires * 864e5);
+        }
+        attributes.expires = attributes.expires ? attributes.expires.toUTCString() : "";
+        try {
+          var result = JSON.stringify(value);
+          if (/^[\{\[]/.test(result)) {
+            value = result;
+          }
+        } catch (e) {
+        }
+        value = converter.write ? converter.write(value, key) : encodeURIComponent(String(value)).replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g, decodeURIComponent);
+        key = encodeURIComponent(String(key)).replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent).replace(/[\(\)]/g, escape);
+        var stringifiedAttributes = "";
+        for (var attributeName in attributes) {
+          if (!attributes[attributeName]) {
+            continue;
+          }
+          stringifiedAttributes += "; " + attributeName;
+          if (attributes[attributeName] === true) {
+            continue;
+          }
+          stringifiedAttributes += "=" + attributes[attributeName].split(";")[0];
+        }
+        return document.cookie = key + "=" + value + stringifiedAttributes;
+      }
+      function get2(key, json) {
+        if (typeof document === "undefined") {
+          return;
+        }
+        var jar = {};
+        var cookies = document.cookie ? document.cookie.split("; ") : [];
+        var i = 0;
+        for (; i < cookies.length; i++) {
+          var parts = cookies[i].split("=");
+          var cookie = parts.slice(1).join("=");
+          if (!json && cookie.charAt(0) === '"') {
+            cookie = cookie.slice(1, -1);
+          }
+          try {
+            var name = decode(parts[0]);
+            cookie = (converter.read || converter)(cookie, name) || decode(cookie);
+            if (json) {
+              try {
+                cookie = JSON.parse(cookie);
+              } catch (e) {
+              }
+            }
+            jar[name] = cookie;
+            if (key === name) {
+              break;
+            }
+          } catch (e) {
+          }
+        }
+        return key ? jar[key] : jar;
+      }
+      api.set = set2;
+      api.get = function(key) {
+        return get2(key, false);
+      };
+      api.getJSON = function(key) {
+        return get2(key, true);
+      };
+      api.remove = function(key, attributes) {
+        set2(key, "", extend(attributes, {
+          expires: -1
+        }));
+      };
+      api.defaults = {};
+      api.withConverter = init;
+      return api;
+    }
+    return init(function() {
+    });
+  });
+})(js_cookie);
+const Cookies = js_cookie.exports;
+const DEFAULT_COOKIE_TTL = 365;
+const CROSS_ORIGIN_IFRAME = amIInsideACrossOriginIframe();
+const DEFAULT_SECURE = CROSS_ORIGIN_IFRAME ? true : false;
+const DEFAULT_SAMESITE = CROSS_ORIGIN_IFRAME ? "None" : "Lax";
+function amIInsideACrossOriginIframe() {
+  try {
+    return !Boolean(window.top.location.href);
+  } catch (err) {
+    return true;
+  }
+}
+class CookieStore {
+  constructor({
+    ttl = DEFAULT_COOKIE_TTL,
+    secure = DEFAULT_SECURE,
+    sameSite = DEFAULT_SAMESITE
+  } = {}) {
+    this.ttl = ttl;
+    this.secure = secure;
+    this.sameSite = sameSite;
+    return (async () => this)();
+  }
+  async get(key) {
+    const value = Cookies.get(key);
+    return typeof value === "string" ? value : void 0;
+  }
+  async set(key, value) {
+    Cookies.set(key, value, this._constructCookieParams());
+  }
+  async remove(key) {
+    Cookies.remove(key, this._constructCookieParams());
+  }
+  _constructCookieParams() {
+    return {
+      expires: this.ttl,
+      secure: this.secure,
+      sameSite: this.sameSite
+    };
+  }
+}
+class Store {
+  constructor(dbName = "keyval-store", storeName = "keyval") {
+    this.storeName = storeName;
+    this._dbp = new Promise((resolve, reject) => {
+      const openreq = indexedDB.open(dbName, 1);
+      openreq.onerror = () => reject(openreq.error);
+      openreq.onsuccess = () => resolve(openreq.result);
+      openreq.onupgradeneeded = () => {
+        openreq.result.createObjectStore(storeName);
+      };
+    });
+  }
+  _withIDBStore(type, callback) {
+    return this._dbp.then((db) => new Promise((resolve, reject) => {
+      const transaction = db.transaction(this.storeName, type);
+      transaction.oncomplete = () => resolve();
+      transaction.onabort = transaction.onerror = () => reject(transaction.error);
+      callback(transaction.objectStore(this.storeName));
+    }));
+  }
+}
+let store;
+function getDefaultStore() {
+  if (!store)
+    store = new Store();
+  return store;
+}
+function get(key, store2 = getDefaultStore()) {
+  let req;
+  return store2._withIDBStore("readonly", (store3) => {
+    req = store3.get(key);
+  }).then(() => req.result);
+}
+function set(key, value, store2 = getDefaultStore()) {
+  return store2._withIDBStore("readwrite", (store3) => {
+    store3.put(value, key);
+  });
+}
+function del(key, store2 = getDefaultStore()) {
+  return store2._withIDBStore("readwrite", (store3) => {
+    store3.delete(key);
+  });
+}
+const DEFAULT_DATABASE_NAME = "ImmortalDB";
+const DEFAULT_STORE_NAME = "key-value-pairs";
+class IndexedDbStore {
+  constructor(dbName = DEFAULT_DATABASE_NAME, storeName = DEFAULT_STORE_NAME) {
+    this.store = new Store(dbName, storeName);
+    return (async () => {
+      try {
+        await this.store._dbp;
+      } catch (err) {
+        if (err.name === "SecurityError") {
+          return null;
+        } else {
+          throw err;
+        }
+      }
+      return this;
+    })();
+  }
+  async get(key) {
+    const value = await get(key, this.store);
+    return typeof value === "string" ? value : void 0;
+  }
+  async set(key, value) {
+    await set(key, value, this.store);
+  }
+  async remove(key) {
+    await del(key, this.store);
+  }
+}
+class StorageApiWrapper {
+  constructor(store2) {
+    this.store = store2;
+    return (async () => this)();
+  }
+  async get(key) {
+    const value = this.store.getItem(key);
+    return typeof value === "string" ? value : void 0;
+  }
+  async set(key, value) {
+    this.store.setItem(key, value);
+  }
+  async remove(key) {
+    this.store.removeItem(key);
+  }
+}
+class LocalStorageStore extends StorageApiWrapper {
+  constructor() {
+    super(window.localStorage);
+  }
+}
+class SessionStorageStore extends StorageApiWrapper {
+  constructor() {
+    super(window.sessionStorage);
+  }
+}
+const cl = console.log;
+const DEFAULT_KEY_PREFIX = "_immortal|";
+const WINDOW_IS_DEFINED = typeof window !== "undefined";
+const DEFAULT_STORES = [CookieStore];
+try {
+  if (WINDOW_IS_DEFINED && window.indexedDB) {
+    DEFAULT_STORES.push(IndexedDbStore);
+  }
+} catch (err) {
+}
+try {
+  if (WINDOW_IS_DEFINED && window.localStorage) {
+    DEFAULT_STORES.push(LocalStorageStore);
+  }
+} catch (err) {
+}
+function arrayGet(arr, index, _default = null) {
+  if (index in arr) {
+    return arr[index];
+  }
+  return _default;
+}
+function countUniques(iterable) {
+  const m = /* @__PURE__ */ new Map();
+  let eles = iterable.slice();
+  for (const ele of eles) {
+    let count = 0;
+    for (const obj of eles) {
+      if (ele === obj) {
+        count += 1;
+      }
+    }
+    if (count > 0) {
+      m.set(ele, count);
+      eles = eles.filter((obj) => obj !== ele);
+    }
+  }
+  return m;
+}
+class ImmortalStorage {
+  constructor(stores = DEFAULT_STORES) {
+    this.stores = [];
+    this.onReady = (async () => {
+      this.stores = (await Promise.all(
+        stores.map(async (StoreClassOrInstance) => {
+          if (typeof StoreClassOrInstance === "object") {
+            return StoreClassOrInstance;
+          } else {
+            try {
+              return await new StoreClassOrInstance();
+            } catch (err) {
+              return null;
+            }
+          }
+        })
+      )).filter(Boolean);
+    })();
+  }
+  async get(key, _default = null) {
+    await this.onReady;
+    const prefixedKey = `${DEFAULT_KEY_PREFIX}${key}`;
+    const values = await Promise.all(
+      this.stores.map(async (store2) => {
+        try {
+          return await store2.get(prefixedKey);
+        } catch (err) {
+          cl(err);
+        }
+      })
+    );
+    const counted = Array.from(countUniques(values).entries());
+    counted.sort((a, b) => a[1] <= b[1]);
+    let value;
+    const [firstValue, firstCount] = arrayGet(counted, 0, [void 0, 0]);
+    const [secondValue, secondCount] = arrayGet(counted, 1, [void 0, 0]);
+    if (firstCount > secondCount || firstCount === secondCount && firstValue !== void 0) {
+      value = firstValue;
+    } else {
+      value = secondValue;
+    }
+    if (value !== void 0) {
+      await this.set(key, value);
+      return value;
+    } else {
+      await this.remove(key);
+      return _default;
+    }
+  }
+  async set(key, value) {
+    await this.onReady;
+    key = `${DEFAULT_KEY_PREFIX}${key}`;
+    await Promise.all(
+      this.stores.map(async (store2) => {
+        try {
+          await store2.set(key, value);
+        } catch (err) {
+          cl(err);
+        }
+      })
+    );
+    return value;
+  }
+  async remove(key) {
+    await this.onReady;
+    key = `${DEFAULT_KEY_PREFIX}${key}`;
+    await Promise.all(
+      this.stores.map(async (store2) => {
+        try {
+          await store2.remove(key);
+        } catch (err) {
+          cl(err);
+        }
+      })
+    );
+  }
+}
+const ImmortalDB = new ImmortalStorage();
+export {
+  CookieStore,
+  DEFAULT_KEY_PREFIX,
+  DEFAULT_STORES,
+  ImmortalDB,
+  ImmortalStorage,
+  IndexedDbStore,
+  LocalStorageStore,
+  SessionStorageStore
+};
+//# sourceMappingURL=index-f3824ee7.js.map
