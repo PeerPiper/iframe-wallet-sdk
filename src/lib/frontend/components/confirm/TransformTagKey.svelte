@@ -15,7 +15,7 @@
 
 <!-- on:confirmed on:denied -- they just forward the event notification up to <Confirmer /> -->
 <!-- https://svelte.dev/tutorial/event-forwarding -->
-<div class="attention">
+<div class="attention rounded-lg m-4 p-4">
 	<!-- this is default content, override with slot -->
 	<div class="break-all">
 		⚠️ Grant Access to {props.params.tag} for
