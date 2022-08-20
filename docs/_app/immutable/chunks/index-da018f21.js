@@ -16364,7 +16364,7 @@ function instance$g($$self, $$props, $$invalidate) {
     setWidth: (w) => $$invalidate(2, width = w)
   };
   onMount(async () => {
-    ({ Connection } = await __vitePreload(() => import("./index-858fc21b.js"), true ? ["_app/immutable/chunks/index-858fc21b.js","_app/immutable/chunks/index-f765a89f.js","_app/immutable/chunks/preload-helper-cc76a931.js"] : void 0));
+    ({ Connection } = await __vitePreload(() => import("./index-5fd0b50b.js"), true ? ["_app/immutable/chunks/index-5fd0b50b.js","_app/immutable/chunks/index-f765a89f.js","_app/immutable/chunks/preload-helper-cc76a931.js"] : void 0));
     const connection = new Connection();
     $$invalidate(6, connector = await connection.init(optionalHandlers));
     $$invalidate(3, connectionReady = async () => {
@@ -16534,7 +16534,7 @@ function create_if_block$7(ctx) {
   let if_block;
   let if_block_anchor;
   let current;
-  const if_block_creators = [create_if_block_1$3, create_else_block$4];
+  const if_block_creators = [create_if_block_1$3, create_else_block$3];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
     if (ctx2[4])
@@ -16596,7 +16596,7 @@ function create_if_block$7(ctx) {
     }
   };
 }
-function create_else_block$4(ctx) {
+function create_else_block$3(ctx) {
   let div;
   let button;
   let current;
@@ -16875,7 +16875,7 @@ function fade(node2, { delay = 0, duration: duration2 = 400, easing = identity$3
 const Clipboard_svelte_svelte_type_style_lang = "";
 const get_default_slot_changes$2 = (dirty) => ({});
 const get_default_slot_context$2 = (ctx) => ({ copy: ctx[2] });
-function create_else_block$3(ctx) {
+function create_else_block$2(ctx) {
   let div;
   let svg;
   let title;
@@ -17009,7 +17009,7 @@ function create_fragment$e(ctx) {
   let current;
   let mounted;
   let dispose;
-  const if_block_creators = [create_if_block$6, create_else_block$3];
+  const if_block_creators = [create_if_block$6, create_else_block$2];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
     if (ctx2[1])
@@ -17414,71 +17414,30 @@ function get_each_context_1(ctx, list, i) {
   child_ctx[7] = list[i];
   return child_ctx;
 }
-function create_else_block$2(ctx) {
-  let t0;
-  let t1_value = JSON.stringify(ctx[0]) + "";
-  let t1;
-  return {
-    c() {
-      t0 = text("No keys ");
-      t1 = text(t1_value);
-    },
-    l(nodes) {
-      t0 = claim_text(nodes, "No keys ");
-      t1 = claim_text(nodes, t1_value);
-    },
-    m(target, anchor) {
-      insert_hydration(target, t0, anchor);
-      insert_hydration(target, t1, anchor);
-    },
-    p(ctx2, dirty) {
-      if (dirty & 1 && t1_value !== (t1_value = JSON.stringify(ctx2[0]) + ""))
-        set_data(t1, t1_value);
-    },
-    i: noop,
-    o: noop,
-    d(detaching) {
-      if (detaching)
-        detach(t0);
-      if (detaching)
-        detach(t1);
-    }
-  };
-}
 function create_if_block$5(ctx) {
-  let t0;
-  let t1_value = JSON.stringify(ctx[0]) + "";
-  let t1;
-  let t2;
   let div;
   let show_if_1 = ctx[0].filter(func_1).length;
-  let t3;
+  let t;
   let show_if = ctx[0].filter(func);
   let current;
   let if_block0 = show_if_1 && create_if_block_2$1(ctx);
   let if_block1 = show_if && create_if_block_1$2(ctx);
   return {
     c() {
-      t0 = text("Yes keys ");
-      t1 = text(t1_value);
-      t2 = space();
       div = element("div");
       if (if_block0)
         if_block0.c();
-      t3 = space();
+      t = space();
       if (if_block1)
         if_block1.c();
       this.h();
     },
     l(nodes) {
-      t0 = claim_text(nodes, "Yes keys ");
-      t1 = claim_text(nodes, t1_value);
-      t2 = claim_space(nodes);
       div = claim_element(nodes, "DIV", { class: true });
       var div_nodes = children(div);
       if (if_block0)
         if_block0.l(div_nodes);
-      t3 = claim_space(div_nodes);
+      t = claim_space(div_nodes);
       if (if_block1)
         if_block1.l(div_nodes);
       div_nodes.forEach(detach);
@@ -17488,20 +17447,15 @@ function create_if_block$5(ctx) {
       attr(div, "class", "card text-toxic shadow-md shadow-toxic/50 rounded-lg p-4 m-4 w-auto bg-neutral-800");
     },
     m(target, anchor) {
-      insert_hydration(target, t0, anchor);
-      insert_hydration(target, t1, anchor);
-      insert_hydration(target, t2, anchor);
       insert_hydration(target, div, anchor);
       if (if_block0)
         if_block0.m(div, null);
-      append_hydration(div, t3);
+      append_hydration(div, t);
       if (if_block1)
         if_block1.m(div, null);
       current = true;
     },
     p(ctx2, dirty) {
-      if ((!current || dirty & 1) && t1_value !== (t1_value = JSON.stringify(ctx2[0]) + ""))
-        set_data(t1, t1_value);
       if (dirty & 1)
         show_if_1 = ctx2[0].filter(func_1).length;
       if (show_if_1) {
@@ -17514,7 +17468,7 @@ function create_if_block$5(ctx) {
           if_block0 = create_if_block_2$1(ctx2);
           if_block0.c();
           transition_in(if_block0, 1);
-          if_block0.m(div, t3);
+          if_block0.m(div, t);
         }
       } else if (if_block0) {
         group_outros();
@@ -17558,12 +17512,6 @@ function create_if_block$5(ctx) {
       current = false;
     },
     d(detaching) {
-      if (detaching)
-        detach(t0);
-      if (detaching)
-        detach(t1);
-      if (detaching)
-        detach(t2);
       if (detaching)
         detach(div);
       if (if_block0)
@@ -18040,53 +17988,45 @@ function create_each_block$2(ctx) {
   };
 }
 function create_fragment$c(ctx) {
-  let current_block_type_index;
-  let if_block;
   let if_block_anchor;
   let current;
-  const if_block_creators = [create_if_block$5, create_else_block$2];
-  const if_blocks = [];
-  function select_block_type(ctx2, dirty) {
-    if (ctx2[0] && ctx2[0].length > 0)
-      return 0;
-    return 1;
-  }
-  current_block_type_index = select_block_type(ctx);
-  if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+  let if_block = ctx[0] && ctx[0].length > 0 && create_if_block$5(ctx);
   return {
     c() {
-      if_block.c();
+      if (if_block)
+        if_block.c();
       if_block_anchor = empty();
     },
     l(nodes) {
-      if_block.l(nodes);
+      if (if_block)
+        if_block.l(nodes);
       if_block_anchor = empty();
     },
     m(target, anchor) {
-      if_blocks[current_block_type_index].m(target, anchor);
+      if (if_block)
+        if_block.m(target, anchor);
       insert_hydration(target, if_block_anchor, anchor);
       current = true;
     },
     p(ctx2, [dirty]) {
-      let previous_block_index = current_block_type_index;
-      current_block_type_index = select_block_type(ctx2);
-      if (current_block_type_index === previous_block_index) {
-        if_blocks[current_block_type_index].p(ctx2, dirty);
-      } else {
+      if (ctx2[0] && ctx2[0].length > 0) {
+        if (if_block) {
+          if_block.p(ctx2, dirty);
+          if (dirty & 1) {
+            transition_in(if_block, 1);
+          }
+        } else {
+          if_block = create_if_block$5(ctx2);
+          if_block.c();
+          transition_in(if_block, 1);
+          if_block.m(if_block_anchor.parentNode, if_block_anchor);
+        }
+      } else if (if_block) {
         group_outros();
-        transition_out(if_blocks[previous_block_index], 1, 1, () => {
-          if_blocks[previous_block_index] = null;
+        transition_out(if_block, 1, 1, () => {
+          if_block = null;
         });
         check_outros();
-        if_block = if_blocks[current_block_type_index];
-        if (!if_block) {
-          if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx2);
-          if_block.c();
-        } else {
-          if_block.p(ctx2, dirty);
-        }
-        transition_in(if_block, 1);
-        if_block.m(if_block_anchor.parentNode, if_block_anchor);
       }
     },
     i(local) {
@@ -18100,7 +18040,8 @@ function create_fragment$c(ctx) {
       current = false;
     },
     d(detaching) {
-      if_blocks[current_block_type_index].d(detaching);
+      if (if_block)
+        if_block.d(detaching);
       if (detaching)
         detach(if_block_anchor);
     }
@@ -18127,27 +18068,6 @@ class ListKeys extends SvelteComponent {
   }
 }
 const GetKeys_svelte_svelte_type_style_lang = "";
-function create_else_block_1$1(ctx) {
-  let t;
-  return {
-    c() {
-      t = text("No handleGenerateKeypair yet");
-    },
-    l(nodes) {
-      t = claim_text(nodes, "No handleGenerateKeypair yet");
-    },
-    m(target, anchor) {
-      insert_hydration(target, t, anchor);
-    },
-    p: noop,
-    i: noop,
-    o: noop,
-    d(detaching) {
-      if (detaching)
-        detach(t);
-    }
-  };
-}
 function create_if_block$4(ctx) {
   let current_block_type_index;
   let if_block;
@@ -18155,13 +18075,13 @@ function create_if_block$4(ctx) {
   let current;
   const if_block_creators = [create_if_block_1$1, create_else_block$1];
   const if_blocks = [];
-  function select_block_type_1(ctx2, dirty) {
+  function select_block_type(ctx2, dirty) {
     var _a, _b;
     if (ctx2[0] != void 0 && ctx2[0] == null || !((_a = ctx2[0]) == null ? void 0 : _a.mnemonic) || !((_b = ctx2[0]) == null ? void 0 : _b.rsajwk))
       return 0;
     return 1;
   }
-  current_block_type_index = select_block_type_1(ctx);
+  current_block_type_index = select_block_type(ctx);
   if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
   return {
     c() {
@@ -18179,7 +18099,7 @@ function create_if_block$4(ctx) {
     },
     p(ctx2, dirty) {
       let previous_block_index = current_block_type_index;
-      current_block_type_index = select_block_type_1(ctx2);
+      current_block_type_index = select_block_type(ctx2);
       if (current_block_type_index === previous_block_index) {
         if_blocks[current_block_type_index].p(ctx2, dirty);
       } else {
@@ -18253,36 +18173,30 @@ function create_else_block$1(ctx) {
   };
 }
 function create_if_block_1$1(ctx) {
-  let t0;
   let div;
-  let t1;
   let button;
-  let t2;
-  let t3;
+  let t0;
+  let t1;
   let html_tag;
   let mounted;
   let dispose;
   return {
     c() {
-      t0 = text("no $storedValue\r\n		\r\n		");
       div = element("div");
-      t1 = text("No keypairs detected in this browser. Create or Import them:\r\n			");
       button = element("button");
-      t2 = text("Create New Keypairs");
-      t3 = space();
+      t0 = text("Create New Keypairs");
+      t1 = space();
       html_tag = new HtmlTagHydration(false);
       this.h();
     },
     l(nodes) {
-      t0 = claim_text(nodes, "no $storedValue\r\n		\r\n		");
       div = claim_element(nodes, "DIV", { class: true });
       var div_nodes = children(div);
-      t1 = claim_text(div_nodes, "No keypairs detected in this browser. Create or Import them:\r\n			");
       button = claim_element(div_nodes, "BUTTON", { class: true });
       var button_nodes = children(button);
-      t2 = claim_text(button_nodes, "Create New Keypairs");
+      t0 = claim_text(button_nodes, "Create New Keypairs");
       button_nodes.forEach(detach);
-      t3 = claim_space(div_nodes);
+      t1 = claim_space(div_nodes);
       html_tag = claim_html_tag(div_nodes, false);
       div_nodes.forEach(detach);
       this.h();
@@ -18293,12 +18207,10 @@ function create_if_block_1$1(ctx) {
       attr(div, "class", "submit flex flex-col text-black bg-yellow-300 shadow p-8 m-4 rounded w-fit svelte-1klozpc");
     },
     m(target, anchor) {
-      insert_hydration(target, t0, anchor);
       insert_hydration(target, div, anchor);
-      append_hydration(div, t1);
       append_hydration(div, button);
-      append_hydration(button, t2);
-      append_hydration(div, t3);
+      append_hydration(button, t0);
+      append_hydration(div, t1);
       html_tag.m(ctx[2], div);
       if (!mounted) {
         dispose = listen(button, "click", function() {
@@ -18317,8 +18229,6 @@ function create_if_block_1$1(ctx) {
     o: noop,
     d(detaching) {
       if (detaching)
-        detach(t0);
-      if (detaching)
         detach(div);
       mounted = false;
       dispose();
@@ -18326,67 +18236,45 @@ function create_if_block_1$1(ctx) {
   };
 }
 function create_fragment$b(ctx) {
-  let t0;
-  let t1;
-  let t2;
-  let current_block_type_index;
-  let if_block;
   let if_block_anchor;
   let current;
-  const if_block_creators = [create_if_block$4, create_else_block_1$1];
-  const if_blocks = [];
-  function select_block_type(ctx2, dirty) {
-    if (ctx2[1])
-      return 0;
-    return 1;
-  }
-  current_block_type_index = select_block_type(ctx);
-  if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+  let if_block = ctx[1] && create_if_block$4(ctx);
   return {
     c() {
-      t0 = text("getkeys, $storedValue ");
-      t1 = text(ctx[0]);
-      t2 = space();
-      if_block.c();
+      if (if_block)
+        if_block.c();
       if_block_anchor = empty();
     },
     l(nodes) {
-      t0 = claim_text(nodes, "getkeys, $storedValue ");
-      t1 = claim_text(nodes, ctx[0]);
-      t2 = claim_space(nodes);
-      if_block.l(nodes);
+      if (if_block)
+        if_block.l(nodes);
       if_block_anchor = empty();
     },
     m(target, anchor) {
-      insert_hydration(target, t0, anchor);
-      insert_hydration(target, t1, anchor);
-      insert_hydration(target, t2, anchor);
-      if_blocks[current_block_type_index].m(target, anchor);
+      if (if_block)
+        if_block.m(target, anchor);
       insert_hydration(target, if_block_anchor, anchor);
       current = true;
     },
     p(ctx2, [dirty]) {
-      if (!current || dirty & 1)
-        set_data(t1, ctx2[0]);
-      let previous_block_index = current_block_type_index;
-      current_block_type_index = select_block_type(ctx2);
-      if (current_block_type_index === previous_block_index) {
-        if_blocks[current_block_type_index].p(ctx2, dirty);
-      } else {
+      if (ctx2[1]) {
+        if (if_block) {
+          if_block.p(ctx2, dirty);
+          if (dirty & 2) {
+            transition_in(if_block, 1);
+          }
+        } else {
+          if_block = create_if_block$4(ctx2);
+          if_block.c();
+          transition_in(if_block, 1);
+          if_block.m(if_block_anchor.parentNode, if_block_anchor);
+        }
+      } else if (if_block) {
         group_outros();
-        transition_out(if_blocks[previous_block_index], 1, 1, () => {
-          if_blocks[previous_block_index] = null;
+        transition_out(if_block, 1, 1, () => {
+          if_block = null;
         });
         check_outros();
-        if_block = if_blocks[current_block_type_index];
-        if (!if_block) {
-          if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx2);
-          if_block.c();
-        } else {
-          if_block.p(ctx2, dirty);
-        }
-        transition_in(if_block, 1);
-        if_block.m(if_block_anchor.parentNode, if_block_anchor);
       }
     },
     i(local) {
@@ -18400,13 +18288,8 @@ function create_fragment$b(ctx) {
       current = false;
     },
     d(detaching) {
-      if (detaching)
-        detach(t0);
-      if (detaching)
-        detach(t1);
-      if (detaching)
-        detach(t2);
-      if_blocks[current_block_type_index].d(detaching);
+      if (if_block)
+        if_block.d(detaching);
       if (detaching)
         detach(if_block_anchor);
     }
@@ -20750,27 +20633,6 @@ class Confirmer extends SvelteComponent {
     init$1(this, options, instance$1, create_fragment$2, safe_not_equal, { show: 1, hide: 2 });
   }
 }
-function create_else_block_2(ctx) {
-  let t;
-  return {
-    c() {
-      t = text("No ImmortalDB");
-    },
-    l(nodes) {
-      t = claim_text(nodes, "No ImmortalDB");
-    },
-    m(target, anchor) {
-      insert_hydration(target, t, anchor);
-    },
-    p: noop,
-    i: noop,
-    o: noop,
-    d(detaching) {
-      if (detaching)
-        detach(t);
-    }
-  };
-}
 function create_if_block(ctx) {
   let current_block_type_index;
   let if_block;
@@ -20778,12 +20640,12 @@ function create_if_block(ctx) {
   let current;
   const if_block_creators = [create_if_block_1, create_else_block_1];
   const if_blocks = [];
-  function select_block_type_1(ctx2, dirty) {
+  function select_block_type(ctx2, dirty) {
     if (window == window.top)
       return 0;
     return 1;
   }
-  current_block_type_index = select_block_type_1();
+  current_block_type_index = select_block_type();
   if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
   return {
     c() {
@@ -20874,12 +20736,12 @@ function create_if_block_1(ctx) {
   let current;
   const if_block_creators = [create_if_block_2, create_else_block];
   const if_blocks = [];
-  function select_block_type_2(ctx2, dirty) {
+  function select_block_type_1(ctx2, dirty) {
     if (ctx2[2])
       return 0;
     return 1;
   }
-  current_block_type_index = select_block_type_2(ctx);
+  current_block_type_index = select_block_type_1(ctx);
   if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
   return {
     c() {
@@ -20904,7 +20766,7 @@ function create_if_block_1(ctx) {
     },
     p(ctx2, dirty) {
       let previous_block_index = current_block_type_index;
-      current_block_type_index = select_block_type_2(ctx2);
+      current_block_type_index = select_block_type_1(ctx2);
       if (current_block_type_index === previous_block_index) {
         if_blocks[current_block_type_index].p(ctx2, dirty);
       } else {
@@ -21287,53 +21149,45 @@ function create_default_slot(ctx) {
   };
 }
 function create_fragment$1(ctx) {
-  let current_block_type_index;
-  let if_block;
   let if_block_anchor;
   let current;
-  const if_block_creators = [create_if_block, create_else_block_2];
-  const if_blocks = [];
-  function select_block_type(ctx2, dirty) {
-    if (ctx2[0])
-      return 0;
-    return 1;
-  }
-  current_block_type_index = select_block_type(ctx);
-  if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+  let if_block = ctx[0] && create_if_block(ctx);
   return {
     c() {
-      if_block.c();
+      if (if_block)
+        if_block.c();
       if_block_anchor = empty();
     },
     l(nodes) {
-      if_block.l(nodes);
+      if (if_block)
+        if_block.l(nodes);
       if_block_anchor = empty();
     },
     m(target, anchor) {
-      if_blocks[current_block_type_index].m(target, anchor);
+      if (if_block)
+        if_block.m(target, anchor);
       insert_hydration(target, if_block_anchor, anchor);
       current = true;
     },
     p(ctx2, [dirty]) {
-      let previous_block_index = current_block_type_index;
-      current_block_type_index = select_block_type(ctx2);
-      if (current_block_type_index === previous_block_index) {
-        if_blocks[current_block_type_index].p(ctx2, dirty);
-      } else {
+      if (ctx2[0]) {
+        if (if_block) {
+          if_block.p(ctx2, dirty);
+          if (dirty & 1) {
+            transition_in(if_block, 1);
+          }
+        } else {
+          if_block = create_if_block(ctx2);
+          if_block.c();
+          transition_in(if_block, 1);
+          if_block.m(if_block_anchor.parentNode, if_block_anchor);
+        }
+      } else if (if_block) {
         group_outros();
-        transition_out(if_blocks[previous_block_index], 1, 1, () => {
-          if_blocks[previous_block_index] = null;
+        transition_out(if_block, 1, 1, () => {
+          if_block = null;
         });
         check_outros();
-        if_block = if_blocks[current_block_type_index];
-        if (!if_block) {
-          if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx2);
-          if_block.c();
-        } else {
-          if_block.p(ctx2, dirty);
-        }
-        transition_in(if_block, 1);
-        if_block.m(if_block_anchor.parentNode, if_block_anchor);
       }
     },
     i(local) {
@@ -21347,7 +21201,8 @@ function create_fragment$1(ctx) {
       current = false;
     },
     d(detaching) {
-      if_blocks[current_block_type_index].d(detaching);
+      if (if_block)
+        if_block.d(detaching);
       if (detaching)
         detach(if_block_anchor);
     }
@@ -21467,4 +21322,4 @@ export {
   handlers as h,
   loadSecrets as l
 };
-//# sourceMappingURL=index-4da2393d.js.map
+//# sourceMappingURL=index-da018f21.js.map

@@ -710,7 +710,7 @@ const matchers = {};
 const components = [
   () => __vitePreload(() => import("./pages/__layout.svelte-18d074ce.js"), true ? ["_app/immutable/pages/__layout.svelte-18d074ce.js","_app/immutable/assets/__layout-4aec4885.css","_app/immutable/chunks/index-f765a89f.js"] : void 0),
   () => __vitePreload(() => import("./error.svelte-88daf0f3.js"), true ? ["_app/immutable/error.svelte-88daf0f3.js","_app/immutable/chunks/index-f765a89f.js"] : void 0),
-  () => __vitePreload(() => import("./pages/index.svelte-31ab07a0.js"), true ? ["_app/immutable/pages/index.svelte-31ab07a0.js","_app/immutable/chunks/index-f765a89f.js","_app/immutable/chunks/index-4da2393d.js","_app/immutable/assets/index-e855c2bc.css","_app/immutable/chunks/preload-helper-cc76a931.js"] : void 0)
+  () => __vitePreload(() => import("./pages/index.svelte-67731379.js"), true ? ["_app/immutable/pages/index.svelte-67731379.js","_app/immutable/chunks/index-f765a89f.js","_app/immutable/chunks/index-da018f21.js","_app/immutable/assets/index-e855c2bc.css","_app/immutable/chunks/preload-helper-cc76a931.js"] : void 0)
 ];
 const dictionary = {
   "": [[0, 2], [1]]
@@ -859,7 +859,7 @@ function create_updated_store() {
     });
     if (res.ok) {
       const { version } = await res.json();
-      const updated = version !== "1661013524193";
+      const updated = version !== "1661013914313";
       if (updated) {
         set(true);
         clearTimeout(timeout);
@@ -1891,4 +1891,4 @@ export {
   set_public_env,
   start
 };
-//# sourceMappingURL=start-216f4ef5.js.map
+//# sourceMappingURL=start-40e99b45.js.map
