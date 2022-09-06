@@ -1,6 +1,6 @@
 {
 	"name": "@peerpiper/iframe-wallet-sdk",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"main": "index.js",
 	"module": "index.js",
 	"scripts": {
@@ -35,12 +35,20 @@
 	"dependencies": {
 		"@peerpiper/wasm-wallet-bindings": "github:PeerPiper/wasm-wallet-bindings",
 		"@stablelib/base64": "^1.0.1",
+		"arbundles": "github:Bundlr-Network/arbundles",
+		"arweave": "^1.11.6",
+		"assert": "^2.0.0",
+		"axios": "^0.27.2",
 		"bignumber.js": "^9.0.2",
+		"buffer": "^6.0.3",
+		"crypto-browserify": "^3.12.0",
 		"did-jwt": "^6.2.2",
+		"events": "^3.3.0",
 		"fast-json-stable-stringify": "^2.1.0",
 		"immortal-db": "^1.1.0",
 		"penpal": "^6.2.2",
 		"rpc-utils": "^0.6.2",
+		"stream-browserify": "^3.0.0",
 		"uint8arrays": "^3.1.0"
 	},
 	"engines": {
