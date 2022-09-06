@@ -3,7 +3,6 @@
 import { handlers as wallet, generateRsaJwk, getLoadedKeys } from '@peerpiper/iframe-wallet-sdk';
 
 import Arweave from 'arweave';
-import { JWKInterface } from 'arweave/node/lib/wallet';
 
 let arweave: Arweave;
 
