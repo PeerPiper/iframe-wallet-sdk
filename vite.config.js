@@ -22,7 +22,7 @@ const config = {
 			util: 'util',
 			stream: 'stream-browserify',
 			assert: 'assert',
-			crypto: 'crypto-browserify'
+			crypto: 'crypto-browserify',
 			Buffer: buffer.Buffer
 		},
 		mainFields: ['browser', 'module', 'main']
@@ -56,6 +56,7 @@ const config = {
 				})
 			]
 		}
+		// exclude: ['arbundles']
 	}
 };
 
