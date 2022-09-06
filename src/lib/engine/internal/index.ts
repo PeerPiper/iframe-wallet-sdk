@@ -44,8 +44,8 @@ export const generateMnemonic = async function () {
 	return wallet.generate_mnemonic();
 };
 
-export const generateRsaJwk = function () {
-	const jwk = generateJWK();
+export const generateRsaJwk = async function () {
+	const jwk = await generateJWK();
 	rsa.set(DEFAULT_RSA_NAME, jwk);
 	return jwk;
 };
