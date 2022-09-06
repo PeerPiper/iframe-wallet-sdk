@@ -39,7 +39,7 @@ let:props={p} gets them back up from the <DefaultConfirmation> slot
 				</li>
 			{/each}
 			Token transfer: {transaction.quantity}<br />
-			Gas fees: {transaction.reward} (~${(
+			One time storage Fee: {transaction.reward} (~${(
 				ArweaveUtils.winstonToAr(transaction.reward) * 100
 			).toFixed(5)})<br />
 		</div>
