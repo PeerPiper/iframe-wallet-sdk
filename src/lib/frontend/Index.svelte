@@ -6,10 +6,8 @@
 	import { onMount } from 'svelte';
 	import AutoSizer from './AutoSizer.svelte';
 	import Connector from './Connector.svelte';
-	import GetKeys from './GetKeys.svelte';
 	import { storedValue } from './stores';
 	import Opened from './Opened.svelte';
-	import Confirmer from './Confirmer.svelte';
 
 	const STORED_VALUE = 'STORED_VALUE';
 	const def = null;
@@ -20,8 +18,13 @@
 	let mounted: boolean = false;
 
 	let syncing: any;
+	let Confirmer;
+	let GetKeys;
 
 	onMount(async () => {
+		Confirmer = (await import('./Confirmer.svelte')).default;
+		GetKeys = (await import('./GetKeys.svelte')).default;
+
 		({ ImmortalDB } = await import('immortal-db'));
 		const storedString = await ImmortalDB.get(STORED_VALUE, def);
 
@@ -50,14 +53,14 @@
 </script>
 
 <!-- Based on whether this is the Window.Top (not an iframe) or a Child (iframe) depends on which to show: -->
-{#if ImmortalDB}
+{#if ImmortalDB && mounted}
 	{#if window == window.top}
 		<!-- NOT an iframe  -->
 		<div class="m-2">
 			{#if syncing}
 				<!-- Opened handles on:loadedKeys by ALSO syncing them with the opener window -->
 				<Opened let:syncKeys>
-					{#if syncKeys}
+					{#if syncKeys && !!GetKeys}
 						<GetKeys on:loadedKeys={loadedKeys} on:loadedKeys={syncKeys} />
 					{/if}
 				</Opened>

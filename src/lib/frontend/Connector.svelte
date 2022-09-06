@@ -2,7 +2,6 @@
 	// @ts-nocheck
 
 	import { onMount } from 'svelte';
-	import { CONSTANTS } from '@peerpiper/iframe-wallet-sdk';
 	import { storedValue } from './stores';
 	import Button from './components/atomic/Button.svelte';
 
@@ -17,8 +16,11 @@
 	let openedWindow;
 
 	let topUrl;
+	let CONSTANTS;
 
 	onMount(async () => {
+		({ CONSTANTS } = await import('@peerpiper/iframe-wallet-sdk'));
+
 		topUrl = self === top ? document.URL : document.referrer;
 
 		// If 1) is NOT top AND 2) No keys are stored a new twin window must be opened so that the user can generate keys, in the top window

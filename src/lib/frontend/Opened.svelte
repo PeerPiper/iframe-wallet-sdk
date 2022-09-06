@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { CONSTANTS } from '@peerpiper/iframe-wallet-sdk';
 	import { storedValue } from './stores';
 
 	let keyDetails;
@@ -8,8 +7,11 @@
 
 	let syncKeys: (e: CustomEvent<any>) => void;
 	let pending: boolean = true;
+	let CONSTANTS;
 
-	onMount(() => {
+	onMount(async () => {
+		({ CONSTANTS } = await import('@peerpiper/iframe-wallet-sdk'));
+
 		try {
 			if (window.location.origin === window.opener?.origin) {
 				sendOpenerMsg(CONSTANTS.OPENED_SIGNAL, (event) => {

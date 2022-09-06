@@ -10,12 +10,6 @@
 	import { onMount, createEventDispatcher } from 'svelte';
 	import { storedValue } from './stores';
 
-	import {
-		generateMnemonic,
-		generateRsaJwk,
-		loadSecrets,
-		getLoadedKeys
-	} from '@peerpiper/iframe-wallet-sdk';
 	import ListKeys from './ListKeys.svelte';
 
 	const dispatch = createEventDispatcher();
@@ -38,7 +32,12 @@
 		publicKeyBase58: string; // address = base64URL encoded hash of jwk.n
 	}[];
 
+	let generateMnemonic, generateRsaJwk, loadSecrets, getLoadedKeys;
+
 	onMount(async () => {
+		({ generateMnemonic, generateRsaJwk, loadSecrets, getLoadedKeys } = await import(
+			'@peerpiper/iframe-wallet-sdk'
+		));
 		handleGenerateKeypair = async () => {
 			creating = 'Creating keypairs...';
 
@@ -55,7 +54,7 @@
 		};
 	});
 
-	$: if ($storedValue && $storedValue.mnemonic) loadKeys(); // load keys once there is a storedValue
+	$: if (!!loadSecrets && !!getLoadedKeys && $storedValue && $storedValue.mnemonic) loadKeys(); // load keys once there is a storedValue
 
 	async function loadKeys() {
 		await loadSecrets({ mnemonic: $storedValue.mnemonic, rsajwk: $storedValue.rsajwk });

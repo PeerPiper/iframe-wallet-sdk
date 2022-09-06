@@ -1,5 +1,13 @@
 <script>
-	import { FrontEnd } from '@peerpiper/iframe-wallet-sdk';
+	import { onMount } from 'svelte';
+
+	let FrontEnd;
+
+	onMount(async () => {
+		({ FrontEnd } = await import('@peerpiper/iframe-wallet-sdk'));
+	});
 </script>
 
-<FrontEnd />
+{#if !!FrontEnd}
+	<FrontEnd />
+{/if}

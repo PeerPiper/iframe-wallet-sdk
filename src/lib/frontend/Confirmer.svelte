@@ -1,8 +1,8 @@
 <script>
 	// @ts-nocheck
+	import { onMount } from 'svelte';
 
 	import { confirmationComponents } from './components/confirm/index';
-	import { handlers } from '@peerpiper/iframe-wallet-sdk';
 
 	export let show;
 	export let hide;
@@ -10,12 +10,19 @@
 	const leaf = (obj, path) => path.split('.').reduce((value, el) => value && value[el], obj);
 
 	let requests = [];
+	let handlers;
 
+	onMount(async () => {
+		({ handlers } = await import('@peerpiper/iframe-wallet-sdk'));
+
+		// pass the above confirm function to the handlers so they can use it when their methods are called
+		handlers.setConfig('confirm', confirm);
+	});
 	// set confirm fn
 	// calling confirm adds a confirmation request to the list of outstanding request
 	// resolving the Promise removes the request
 	// if last request, hide() the UI
-	const confirm = async (confirmSection, params) => {
+	async function confirm(confirmSection, params) {
 		const component = confirmSection
 			? leaf(confirmationComponents, confirmSection) || confirmationComponents.Default
 			: false;
@@ -40,10 +47,7 @@
 			requests = [...requests, thisRequest];
 			show(); // trigger the UI to show this request
 		});
-	};
-
-	// pass the above confirm function to the handlers so they can use it when their methods are called
-	handlers.setConfig('confirm', confirm);
+	}
 </script>
 
 {#if requests}
