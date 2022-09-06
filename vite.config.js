@@ -1,6 +1,7 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import path, { dirname } from 'path';
 import * as buffer from 'buffer';
+import GlobalPolyFill, { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
 
 /** @type {import('vite').UserConfig} */
 const config = {
@@ -11,8 +12,8 @@ const config = {
 		}
 	},
 	define: {
-		'process.env': {}
-		// Buffer: buffer.Buffer
+		'process.env': {},
+		global: 'globalThis'
 	},
 	resolve: {
 		alias: {
@@ -21,7 +22,7 @@ const config = {
 			util: 'util',
 			stream: 'stream-browserify',
 			assert: 'assert',
-			crypto: 'crypto-browserify',
+			crypto: 'crypto-browserify'
 			Buffer: buffer.Buffer
 		},
 		mainFields: ['browser', 'module', 'main']
@@ -42,11 +43,19 @@ const config = {
 		minimize: false
 	},
 	optimizeDeps: {
-		include: [
-			'immortal-db'
-			// , 'arbundles'
-		]
-		// exclude: ['arbundles']
+		include: ['immortal-db', 'arbundles'],
+		esbuildOptions: {
+			define: {
+				global: 'globalThis',
+				'globalThis.process.env.NODE_ENV': 'production'
+			},
+			plugins: [
+				NodeGlobalsPolyfillPlugin({
+					process: true,
+					buffer: true
+				})
+			]
+		}
 	}
 };
 
