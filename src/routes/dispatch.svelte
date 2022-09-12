@@ -21,5 +21,5 @@
 </script>
 
 {#if result}
-	{JSON.stringify(result)}
+	{result}
 {/if}
