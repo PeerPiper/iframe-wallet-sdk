@@ -31,7 +31,7 @@ const config = {
 	// https://vitejs.dev/guide/dep-pre-bundling.html#monorepos-and-linked-dependencies
 	build: {
 		commonjsOptions: {
-			include: [/immortal-db/, /node_modules/, /arbundles/]
+			include: [/immortal-db/, /node_modules/, /arbundles/] // needed to dev with js.cookie.js
 		},
 		minify: false,
 		sourcemap: true,
@@ -43,7 +43,7 @@ const config = {
 		minimize: false
 	},
 	optimizeDeps: {
-		include: ['immortal-db', 'arbundles'],
+		include: ['immortal-db', 'arbundles'], // needed to dev with js.cookie.js
 		esbuildOptions: {
 			define: {
 				global: 'globalThis',
