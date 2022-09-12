@@ -1,6 +1,6 @@
 // test dispatch in browser
 // import dispatch from arweave handler
-import { handlers as wallet, generateRsaJwk, getLoadedKeys } from '@peerpiper/iframe-wallet-sdk';
+import { handlers as wallet, generateRsaJwk } from '@peerpiper/iframe-wallet-sdk';
 
 import Arweave from 'arweave';
 
@@ -16,20 +16,19 @@ async function bundle(arweave) {
 
 	console.log({ transaction });
 
-	const dataEntry = await wallet.arweaveWalletAPI.dispatch(transaction);
-	console.log({ dataEntry });
+	const txid = await wallet.arweaveWalletAPI.dispatch(transaction);
+	console.log({ txid });
 
-	return dataEntry;
+	return txid;
 }
 
 export async function flow() {
 	await generateRsaJwk();
-	const keys = getLoadedKeys();
 
 	arweave = Arweave.init({});
-	const Tx = await bundle(arweave);
+	const txid = await bundle(arweave);
 
-	console.log(`IDs: ${JSON.stringify(Tx)}`);
+	console.log(`IDs: ${txid}`);
 
-	return Tx;
+	return txid;
 }
