@@ -188,10 +188,7 @@ export const arweaveWalletAPI = {
 			await dataEntry.sign(dataSigner);
 			await uploadDataToBundlr(dataEntry); // TODO: Move outside wallet, not a crypto operation
 
-			return {
-				id: dataEntry.id,
-				type: 'BUNDLED'
-			};
+			return dataEntry.id;
 		} catch (e) {
 			console.log('Error signing', e);
 		}
