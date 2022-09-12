@@ -1,1 +1,5 @@
-export type { Proxcryptor } from './engine/handlers/proxcryptor';
+export type {
+	Proxcryptor,
+	EncryptedMessage,
+	ReEncryptedMessage
+} from './engine/handlers/proxcryptor';
