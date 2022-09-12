@@ -2,10 +2,13 @@
 
 NOTE: If you simply want to deploy your own wallet, you have options:
 
-[x] - Use this github repo website [https://peerpiper.github.io/iframe-wallet-sdk/](https://peerpiper.github.io/iframe-wallet-sdk/)
-[x] - Clone this repo and use your own site (Github)
-[x] - Use the Engine with your own frontend (React, Vue, whatever)
-[ ] - Areave Permapage wallet
+- [x] Use this github repo website [https://peerpiper.github.io/iframe-wallet-sdk/](https://peerpiper.github.io/iframe-wallet-sdk/)
+
+- [x] Clone this repo and use your own site (Github)
+
+- [x] Use the Engine with your own frontend (React, Vue, whatever)
+
+- [x] Areave wallet
 
 Use the default PeerPiper Web3 Wallet, or use the kit to make your own / integrate to your back end.
 
