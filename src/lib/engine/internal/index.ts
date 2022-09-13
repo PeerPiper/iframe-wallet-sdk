@@ -20,7 +20,7 @@ function browser() {
 }
 
 async function loadWallet() {
-	if (!browser()) return; // skip non-browser enviroments
+	if (!browser()) return; // skip non-browser enviroments, wasm only works in the browser
 	const resolved = await getWallet();
 	wallet = resolved;
 }
