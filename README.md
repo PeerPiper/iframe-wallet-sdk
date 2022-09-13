@@ -118,11 +118,10 @@ The Wallet API is used ndirectly through the Connector and the API can be found 
 import { Proxcryptor } from '@peerpiper/iframe-wallet-sdk';
 
 await proxcryptor.getPublicKey();
-await proxcryptor.generateReKey(targetPublicKey, tag);
-await proxcryptor.reEncrypt(targetPublicKey, tagNode.encryptedKey, targetsReKey);
-await proxcryptor.selfEncrypt(symmetricKey, tag);
-await proxcryptor.reDecrypt(re_encrypted_message);
-await proxcryptor.selfDecrypt(tagNode.encryptedKey);
+await proxcryptor.selfEncrypt(symmetricKey, tag); // encrypt something with your key
+await proxcryptor.selfDecrypt(tagNode.encryptedKey); // decrypt something you encrypted, no need to Transform it for yourself
+await proxcryptor.transformEncrypt(targetPublicKey, tag); // encrypt for another, granting their key access
+await proxcryptor.reDecrypt(re_encrypted_message); // decrypt a msg that's been reEncrypted for you
 ```
 
 ## Contributing
