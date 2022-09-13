@@ -5,7 +5,7 @@ import ArweaveSign from './ArweaveSign.svelte';
 import Sign from './Sign.svelte';
 import Decrypt from './Decrypt.svelte';
 import ReDecrypt from './ReDecrypt.svelte';
-import TransformTagKey from './TransformTagKey.svelte';
+import TransformEncrypt from './TransformEncrypt.svelte';
 
 let confirmationComponents = {
 	Default: { component: DefaultConfirmation }
@@ -33,8 +33,8 @@ let customizedComponents = {
 		selfDecrypt: {
 			component: Decrypt
 		},
-		transformTagKey: {
-			component: TransformTagKey
+		transformEncrypt: {
+			component: TransformEncrypt
 		},
 		reDecrypt: {
 			component: ReDecrypt
