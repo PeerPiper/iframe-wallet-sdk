@@ -37,11 +37,15 @@ export const proxcryptor: Proxcryptor = {
 		}
 	},
 
+	/**
+	 * GenerateReKey and reEncrypt are deprecated, do not use. Use 'transformEncrypt' instead.
+	 */
 	generateReKey: async (
 		targetPublicKey: Uint8Array,
 		tag: string,
 		pre_name: string = DEFAULT_NAME
 	): Promise<ReKey> => {
+		console.warn("generateReKey and reEncrypt are deprecated. Use 'transformEncrypt' instead.");
 		if (!assertReady())
 			return new Error(
 				'Wallet not connected or initialized. Run connect() and await initialize() first.'
@@ -59,12 +63,17 @@ export const proxcryptor: Proxcryptor = {
 		let re_key = pre.get(pre_name).generate_re_key(targetPublicKey, tag);
 		return re_key;
 	},
-
+	
+	/**
+	 * GenerateReKey and reEncrypt are deprecated, do not use. Use 'transformEncrypt' instead.
+	 */
 	reEncrypt: async (
 		targetPublicKey: Uint8Array,
 		encrypted_message: EncryptedMessage,
 		re_key: ReKey
 	): Promise<ReEncryptedMessage> => {
+		console.warn("generateReKey and reEncrypt are deprecated. Use 'transformEncrypt' instead.");
+
 		if (!assertReady())
 			return new Error(
 				'Wallet not connected or initialized. Run connect() and await initialize() first.'
@@ -82,7 +91,7 @@ export const proxcryptor: Proxcryptor = {
 		return re_encrypted_message;
 	},
 
-	transformTagKey: async (
+	transformEncrypt: async (
 		targetPublicKey: Uint8Array,
 		tag: string,
 		encrypted_message: EncryptedMessage,
@@ -95,7 +104,7 @@ export const proxcryptor: Proxcryptor = {
 		if (!(pre && pre_name && pre.get(pre_name)))
 			return new Error('No proxy encryptor available for this name.');
 
-		const methodName = 'proxcryptor.transformTagKey';
+		const methodName = 'proxcryptor.transformEncrypt';
 		const args = { tag, targetPublicKey }; // textDecoder.decode()
 
 		const config = getConfig();
@@ -115,8 +124,9 @@ export const proxcryptor: Proxcryptor = {
 			return new Error(
 				'Wallet not connected or initialized. Run connect() and await initialize() first.'
 			);
-		if (!(pre && pre_name && pre.get(pre_name)))
-			return new Error('No proxy encryptor available for this name.');
+		console.log({ pre, pre_name });
+		console.log(pre.get(pre_name));
+		// if (!pre.get(pre_name)) return new Error('No proxy encryptor available for this name.');
 
 		const methodName = 'proxcryptor.reDecrypt';
 		const args = {}; // textDecoder.decode()
