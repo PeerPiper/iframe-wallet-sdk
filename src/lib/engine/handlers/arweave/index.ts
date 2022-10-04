@@ -141,7 +141,19 @@ export const arweaveWalletAPI = {
 		}
 	},
 	async getActivePublicKey() {
-		// TODO
+		try {
+			let jwk;
+
+			// find the RSA key
+			rsa.forEach((value, key, map) => {
+				if (value.kty == 'RSA') {
+					jwk = value;
+				}
+			});
+			return { kty: 'RSA', e: 'AQAB', n: jwk.n };
+		} catch (e) {
+			throw new Error(e);
+		}
 	},
 	async getAllAddresses() {
 		// TODO
