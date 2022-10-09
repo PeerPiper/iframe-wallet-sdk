@@ -6,8 +6,11 @@
 	export let handleConfirmed;
 	export let handleDenied;
 
-	let defConf;
-	let checksOut = false;
+	/**
+	 * @type {boolean}
+	 */
+	let isWarp;
+
 	console.log('Signing ', { params: props.params });
 
 	const transaction = props.params;
@@ -17,11 +20,15 @@
 		name: tag.get('name', { decode: true, string: true }),
 		val: tag.get('value', { decode: true, string: true })
 	}));
+	// <!-- check if tags array has an element with the name 'SDK' equaling 'Warp' -->
+	if (tags.some((tag) => tag.name === 'SDK' && tag.val === 'Warp')) {
+		isWarp = true;
+	}
 </script>
 
-<!-- 
+<!--
 {props} passes the properties down to <DefaultConfirmation>
-let:props={p} gets them back up from the <DefaultConfirmation> slot 
+let:props={p} gets them back up from the <DefaultConfirmation> slot
 -->
 {#if transaction}
 	<div class="attention">
@@ -38,10 +45,18 @@ let:props={p} gets them back up from the <DefaultConfirmation> slot
 					{val}
 				</li>
 			{/each}
+			<!-- if transaction.data_size < 100000, cross out and thank uploadDataToBundlr.Network -->
 			Token transfer: {transaction.quantity}<br />
-			One time storage Fee: {transaction.reward} (~${(
-				ArweaveUtils.winstonToAr(transaction.reward) * 100
-			).toFixed(5)})<br />
+			One time storage Fee:
+			<span class={isWarp && transaction.data_size < 100000 ? 'line-through' : ''}
+				>{transaction.reward} (~${(ArweaveUtils.winstonToAr(transaction.reward) * 100).toFixed(
+					5
+				)})</span
+			>{#if isWarp && transaction.data_size < 100000}
+				<br />
+				<span class="bold">Thank you for using Bundlr.Network!</span>
+			{/if}
+			<br />
 		</div>
 		<div class="submit">
 			<Button type={'Yes'} clickHandler={handleConfirmed}>Yes</Button>
