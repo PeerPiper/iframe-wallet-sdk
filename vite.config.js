@@ -33,10 +33,10 @@ const config = {
 		commonjsOptions: {
 			include: [/immortal-db/, /node_modules/, /arbundles/] // needed to dev with js.cookie.js
 		},
-		minify: false,
+		// minify: false,
 		sourcemap: true,
 		optimization: {
-			minimize: false
+			// minimize: false
 		}
 	},
 	optimization: {
