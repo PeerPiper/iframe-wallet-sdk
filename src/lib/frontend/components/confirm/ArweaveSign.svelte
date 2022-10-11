@@ -21,7 +21,7 @@
 		val: tag.get('value', { decode: true, string: true })
 	}));
 	// <!-- check if tags array has an element with the name 'SDK' equaling 'Warp' -->
-	if (tags.some((tag) => tag.name === 'SDK' && tag.val === 'Warp')) {
+	if (tags.some((tag) => tag.name === 'SDK' && (tag.val === 'Warp' || tag.val === 'RedStone'))) {
 		isWarp = true;
 	}
 </script>
