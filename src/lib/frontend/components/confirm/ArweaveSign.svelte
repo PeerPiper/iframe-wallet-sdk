@@ -6,11 +6,6 @@
 	export let handleConfirmed;
 	export let handleDenied;
 
-	/**
-	 * @type {boolean}
-	 */
-	let isWarp;
-
 	console.log('Signing ', { params: props.params });
 
 	const transaction = props.params;
@@ -20,10 +15,6 @@
 		name: tag.get('name', { decode: true, string: true }),
 		val: tag.get('value', { decode: true, string: true })
 	}));
-	// <!-- check if tags array has an element with the name 'SDK' equaling 'Warp' -->
-	if (tags.some((tag) => tag.name === 'SDK' && (tag.val === 'Warp' || tag.val === 'RedStone'))) {
-		isWarp = true;
-	}
 </script>
 
 <!--
