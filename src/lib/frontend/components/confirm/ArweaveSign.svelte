@@ -46,13 +46,14 @@ let:props={p} gets them back up from the <DefaultConfirmation> slot
 				</li>
 			{/each}
 			<!-- if transaction.data_size < 100000, cross out and thank uploadDataToBundlr.Network -->
-			Token transfer: {transaction.quantity}<br />
+			Token transfer:
+			<span class={transaction.quantity == 0 ? 'green' : ''}>{transaction.quantity}</span><br />
 			One time storage Fee:
-			<span class={isWarp && transaction.data_size < 100000 ? 'line-through' : ''}
+			<span class={transaction.data_size < 100000 ? 'line-through' : ''}
 				>{transaction.reward} (~${(ArweaveUtils.winstonToAr(transaction.reward) * 100).toFixed(
 					5
 				)})</span
-			>{#if isWarp && transaction.data_size < 100000}
+			>{#if transaction.data_size < 100000}
 				<br />
 				<span class="bold">Thank you for using Bundlr.Network!</span>
 			{/if}
