@@ -6,6 +6,7 @@
 	import { shorten, bufftoHex } from './utils';
 	import Clipboard from './Clipboard.svelte';
 	import EncodingSelector from './components/atomic/EncodingSelector.svelte';
+	import Menu from './Menu.svelte';
 
 	export let keys;
 
@@ -14,6 +15,7 @@
 </script>
 
 {#if keys && keys.length > 0}
+	<Menu />
 	<div class="card text-toxic shadow-md shadow-toxic/50 rounded-lg p-4 m-4 w-auto bg-neutral-800">
 		{#if keys.filter((k) => k.publicKeyJWK.kty == 'RSA').length}
 			<div class="keylist overflow-hidden">
@@ -50,22 +52,6 @@
 							<EncodingSelector pubkey={new Uint8Array(edJWK.publicKey)} let:encoded>
 								<Clipboard>{encoded}</Clipboard>
 							</EncodingSelector>
-							<!-- <li class=" list-group-item list-group-item-action ">
-								{shorten(edJWK.name)}
-								<div class="full-pubKey">
-									Base64URL: <Clipboard>{edJWK.publicKeyJWK.x}</Clipboard>
-								</div>
-								<div class="full-pubKey">
-									Base58: <Clipboard>{edJWK.publicKeyBase58}</Clipboard>
-								</div>
-								<div class="full-pubKey">
-									Hex: <Clipboard>{bufftoHex(edJWK.publicKey)}</Clipboard>
-								</div>
-								<div class="full-pubKey">
-									Bytes: <Clipboard>{edJWK.publicKey}</Clipboard>
-								</div>
-							</li> -->
-							<!-- <b>{shorten(key?.publicKeyBase58)}</b><br /> -->
 						{/each}
 					</ul>
 				</div>
