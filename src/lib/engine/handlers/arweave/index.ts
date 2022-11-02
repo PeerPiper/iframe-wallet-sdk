@@ -150,7 +150,7 @@ export const arweaveWalletAPI = {
 					jwk = value;
 				}
 			});
-			return { kty: 'RSA', e: 'AQAB', n: jwk.n };
+			return { kty: 'RSA', e: 'AQAB', n: jwk.n, kid: jwk?.kid || null };
 		} catch (e) {
 			throw new Error(e);
 		}
