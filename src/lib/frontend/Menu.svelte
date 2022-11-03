@@ -55,7 +55,7 @@
 </script>
 
 <div
-	class="absolute m-2 w-48 right-0 text-toxic"
+	class="absolute m-2 w-48 top-0 right-0 text-toxic"
 	use:clickOutside={{ enabled: show, cb: () => (show = false) }}
 >
 	<button class="m-auto w-full" on:click={toggle}>
