@@ -20,7 +20,7 @@
 	});
 </script>
 
-<div class="bg-neutral-700 relative flex flex-col h-screen">
+<div class="bg-neutral-700 relative flex flex-col h-screen w-full">
 	{#if mounted}
 		<slot />
 	{/if}
