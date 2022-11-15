@@ -11,6 +11,7 @@
 
 	let requests = [];
 	let handlers;
+	let skips = new Set();
 
 	onMount(async () => {
 		({ handlers } = await import('@peerpiper/iframe-wallet-sdk'));
@@ -28,8 +29,17 @@
 			: false;
 
 		return new Promise((resolve, reject) => {
-			const handleConfirmed = () => {
-				common();
+			if (confirmSection && skips.has(confirmSection)) {
+				clearRequestQueue(confirmSection);
+				return resolve(true);
+			}
+			const handleConfirmed = (options) => {
+				common(options);
+				if (options.dontAskAgain) {
+					// add this confirmSection to a list of "resolve right away" confirmations
+					skips.add(confirmSection);
+					clearRequestQueue(confirmSection);
+				}
 				resolve(true); // signal handler to continue with action
 			};
 			const handleDenied = () => {
@@ -39,20 +49,33 @@
 
 			const thisRequest = { component, confirmSection, params, handleConfirmed, handleDenied };
 
-			function common() {
+			function common(options) {
 				requests = requests.filter((req) => req !== thisRequest); // find and remove element
-				if (requests.length == 0) hide(); // hide if last one removed
 			}
-
 			requests = [...requests, thisRequest];
 			show(); // trigger the UI to show this request
 		});
+	}
+
+	$: if (requests.length == 0) hide();
+
+	function clearRequestQueue(confirmSection) {
+		// find all requests that match this confirmSection and also resolve them
+		requests = requests.map((request) => {
+			if (request.confirmSection === confirmSection) {
+				request.handleConfirmed({}); // resolve the request
+				return null; // remove request from array
+			}
+			return request;
+		});
+		// filter out null entries
+		requests = requests.filter((request) => request);
 	}
 </script>
 
 {#if requests}
 	{#each requests as { component, confirmSection, params, handleConfirmed, handleDenied }}
-		<div class="active">
+		<div class="flex flex-col items-center ">
 			<svelte:component
 				this={component.component}
 				props={{ method: confirmSection, params }}
@@ -63,12 +86,5 @@
 	{/each}
 {/if}
 
-<style>
-	.active {
-		display: flex;
-		align-items: center;
-		min-width: 350px;
-		min-height: 50px;
-		flex-direction: column;
-	}
+<style lang="postcss">
 </style>
