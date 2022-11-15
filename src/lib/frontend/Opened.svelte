@@ -7,45 +7,40 @@
 
 	let syncKeys: (e: CustomEvent<any>) => void;
 	let pending: boolean = true;
-	let CONSTANTS;
+	let CONSTANTS: any;
 
 	onMount(async () => {
 		({ CONSTANTS } = await import('@peerpiper/iframe-wallet-sdk'));
 
-		try {
-			if (window.location.origin === window.opener?.origin) {
-				sendOpenerMsg(CONSTANTS.OPENED_SIGNAL, (event) => {
-					// called when the opener replies to our message above
-					pending = false;
-				});
-			}
-		} catch (error) {
-			console.warn("Origins didn't match");
-		}
+		sendOpenerMsg(CONSTANTS.OPENED_SIGNAL, {
+			callback: () => (pending = false)
+		});
 
-		function sendOpenerMsg(msg: any, callback = (_: any) => {}) {
-			const channel = new MessageChannel();
-			channel.port1.onmessage = callback; // Listen for messages on port1
-			try {
-				if (window.opener?.origin === window.location.origin)
-					window.opener.postMessage(msg, window.location.origin, [channel.port2]); // the opener will receive this message
-			} catch (error) {
-				console.log("Origins didn't match");
-			}
+		function sendOpenerMsg(label: any, detail: any = {}) {
+			if (window.opener?.origin !== window.location.origin) return;
+			window.opener.document.dispatchEvent(
+				new CustomEvent(label, {
+					detail
+				})
+			);
 		}
 
 		// Called when user allows a copy of the keys to be imported to another browser window in same origin
 		syncKeys = (e: CustomEvent<any>): void => {
-			sendOpenerMsg({ key: CONSTANTS.WINDOW_SYNC, storedValue: $storedValue }, (event) => {
-				pending = false;
-				navigateBack();
-			}); // uses same origin, keys are secure
+			const detail = {
+				storedValue: $storedValue,
+				callback: () => {
+					pending = false;
+					navigateBack();
+				}
+			};
+			console.log('sending syncKeys', detail);
+			sendOpenerMsg(CONSTANTS.WINDOW_SYNC, detail); // uses same origin, keys are secure
 		};
 
 		window.addEventListener('beforeunload', () => {
 			try {
-				if (window.opener?.origin === window.location.origin)
-					window.opener.postMessage(CONSTANTS.CLOSING);
+				sendOpenerMsg(CONSTANTS.CLOSING);
 				navigateBack();
 			} catch (error) {
 				console.log("Origins didn't match");

@@ -29,6 +29,20 @@
 			openedWindow = window.open(window.location.href, '_blank'); // open the same domain to provide maximum security.
 		};
 
+		document.addEventListener(CONSTANTS.OPENED_SIGNAL, (e) => e.detail.callback(topUrl), false);
+		document.addEventListener(CONSTANTS.CLOSING, (e) => (connecting = false), false);
+		document.addEventListener(
+			CONSTANTS.WINDOW_SYNC,
+			(e) => {
+				$storedValue = e.detail.storedValue;
+				connecting = false;
+				e.detail.callback();
+				openedWindow.close(); // ### TESTING
+				// window.focus(); // fails tho
+			},
+			false
+		);
+
 		handleMessage = async (event) => {
 			if (event.data == CONSTANTS.OPENED_SIGNAL) {
 				event.ports[0].postMessage(topUrl);
@@ -45,8 +59,8 @@
 				// await importKeys(JSON.parse(event.data.data)); // import the keys here in this browser context
 				event.ports[0].postMessage('Imported'); // send ack back to Opened window so it can remove "pending" label for this window
 				connecting = false;
-				openedWindow.close();
-				window.focus(); // fails tho
+				openedWindow.close(); // ### Works
+				// window.focus(); // fails tho
 			}
 
 			// Main page closed, state is no longer trying to connect
@@ -59,7 +73,7 @@
 
 <svelte:window on:message={handleMessage} />
 
-<div class="connector flex flex-col min-h-full items-center justify-center flex-nowrap">
+<div class="connector flex flex-col min-h-full flex-nowrap">
 	{#if mounted}
 		{#if $storedValue}
 			<slot />
