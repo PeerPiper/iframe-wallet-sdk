@@ -41,7 +41,7 @@
 			</svg>
 		</div>
 	{/if}
-	<div class="Clipboard" bind:this={clip}>
+	<div class="Clipboard text-ellipsis overflow-hidden" bind:this={clip}>
 		<slot {copy} />
 	</div>
 </div>
