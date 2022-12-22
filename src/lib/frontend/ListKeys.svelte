@@ -61,6 +61,22 @@
 					</div>
 				</div>
 			{/if}
+			{#if keys.filter((k) => !!k.nameCid)}
+				<div class="keylist">
+					<div class="row left">
+						<span>IPNS</span>
+					</div>
+
+					<div class="row list-group">
+						<ul>
+							{#each keys.filter((k) => !!k.nameCid) as ipnsKey, k}
+								{ipnsKey.name}:
+								<span class="text-sm"><Clipboard>{ipnsKey.nameCid}</Clipboard></span>
+							{/each}
+						</ul>
+					</div>
+				</div>
+			{/if}
 		</div>
 	{/if}
 {/if}
