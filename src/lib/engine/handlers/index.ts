@@ -7,6 +7,7 @@ const browser = () => ![typeof window, typeof document].includes('undefined');
 // import plugins
 import { ed25519 } from './ed25519';
 import { arweaveWalletAPI } from './arweave';
+import { ipns } from './ipns';
 // import { rsa } from "./rsa"
 
 import { jwkToSecretBytes } from './ed25519/utils';
@@ -39,6 +40,7 @@ export const handlers = {
 	ed25519,
 	arweaveWalletAPI,
 	proxcryptor,
+	ipns,
 
 	connect: async (origin: type) => {
 		const config = getConfig();
