@@ -1,6 +1,10 @@
 import { getWallet } from '@peerpiper/wasm-wallet-bindings';
 import { publicKeyJwkFromPublicKey } from '../handlers/ed25519/utils';
 import { generateJWK, jwkToCryptoKey } from '../handlers/arweave';
+import { handlers } from '../handlers';
+import { DEFAULT_IPNS_NICKNAME } from '../handlers/ipns';
+
+import { keys as libp2pKeys } from '@libp2p/crypto';
 
 export const DEFAULT_PROXCRYPTOR_NAME = 'DEFAULT_PROXCRYPTOR_NAME';
 export const pre = new Map();
@@ -51,9 +55,21 @@ export const generateRsaJwk = async function () {
 };
 
 export const loadSecrets = async function ({ mnemonic, rsajwk }) {
-	rsa.set(DEFAULT_RSA_NAME, rsajwk);
+	if (rsajwk) rsa.set(DEFAULT_RSA_NAME, rsajwk);
 	await loadMnemonicInProxcryptor(mnemonic);
+	await loadMnemonicInIPNS(mnemonic);
 	// also pass keypair to create a Provider
+};
+
+export const loadMnemonicInIPNS = async function (
+	mnemonic: string,
+	nickname?: string = DEFAULT_IPNS_NICKNAME
+): string {
+	await assertWallet();
+	let seed = wallet.mnemonic_to_secret_bytes(mnemonic);
+	const privateKey = await libp2pKeys.generateKeyPairFromSeed('ed25519', new Uint8Array(seed));
+	// bytes needs to be a marshalled privKey
+	await handlers.ipns.create({ nickname, bytes: libp2pKeys.marshalPrivateKey(privateKey) });
 };
 
 export const loadMnemonicInProxcryptor = async function (
@@ -100,6 +116,15 @@ export const getLoadedKeys = (): {
 				n: keyDetails.n
 			}, // already a JWK
 			publicKeyBase58: null // address = base64URL encoded hash of jwk.n
+		});
+	});
+
+	handlers.ipns.getAll().forEach(({ nickname, nameCid, publicKey }) => {
+		results.push({
+			name: nickname,
+			nameCid,
+			publicKey,
+			publicKeyJWK: publicKeyJwkFromPublicKey(publicKey)
 		});
 	});
 
