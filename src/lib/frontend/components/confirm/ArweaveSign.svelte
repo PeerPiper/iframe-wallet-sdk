@@ -11,9 +11,6 @@
 
 	let open;
 	let dontAskAgain = false;
-
-	console.log('Signing ', { params: props.params });
-
 	const transaction = props.params;
 
 	let tx = new ArweaveUtils.Transaction(transaction);
