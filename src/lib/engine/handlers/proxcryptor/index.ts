@@ -13,7 +13,11 @@ function assertReady() {
 
 export type { Proxcryptor };
 export const proxcryptor: Proxcryptor = {
-	selfEncrypt: (data: Uint8Array, tag: Uint8Array, pre_name: string = DEFAULT_NAME) => {
+	selfEncrypt: (
+		data: Uint8Array,
+		tag: Uint8Array,
+		pre_name: string = DEFAULT_NAME
+	): EncryptedMessage => {
 		if (!assertReady())
 			return new Error(
 				'Wallet not connected or initialized. Run connect() and await initialize() first.'
@@ -63,7 +67,7 @@ export const proxcryptor: Proxcryptor = {
 		let re_key = pre.get(pre_name).generate_re_key(targetPublicKey, tag);
 		return re_key;
 	},
-	
+
 	/**
 	 * GenerateReKey and reEncrypt are deprecated, do not use. Use 'transformEncrypt' instead.
 	 */
@@ -124,8 +128,6 @@ export const proxcryptor: Proxcryptor = {
 			return new Error(
 				'Wallet not connected or initialized. Run connect() and await initialize() first.'
 			);
-		console.log({ pre, pre_name });
-		console.log(pre.get(pre_name));
 		// if (!pre.get(pre_name)) return new Error('No proxy encryptor available for this name.');
 
 		const methodName = 'proxcryptor.reDecrypt';
