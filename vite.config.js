@@ -12,8 +12,8 @@ const config = {
 		}
 	},
 	define: {
-		'process.env': {},
-		global: 'globalThis'
+		'process.env': {}
+		// global: 'globalThis' // need global for testing
 	},
 	resolve: {
 		alias: {
@@ -37,7 +37,8 @@ const config = {
 		sourcemap: true,
 		optimization: {
 			// minimize: false
-		}
+		},
+		target: ['es2020'] // w3name, bigint issue (vite vitejs Big integer literals are not available) needing modern browsers, see https://github.com/sveltejs/kit/issues/859#issuecomment-1184696144
 	},
 	optimization: {
 		minimize: false
@@ -54,9 +55,15 @@ const config = {
 					process: true,
 					buffer: true
 				})
-			]
+			],
+			target: 'es2020' // w3name, bigint issue (vite vitejs Big integer literals are not available) needing modern browsers, see https://github.com/sveltejs/kit/issues/859#issuecomment-1184696144
 		}
 		// exclude: ['arbundles']
+	},
+	// @ts-ignore
+	test: {
+		hookTimeout: 60000,
+		testTimeout: 60000
 	}
 };
 
