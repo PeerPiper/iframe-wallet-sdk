@@ -42,6 +42,7 @@
 		"@libp2p/crypto": "^1.0.7",
 		"@peerpiper/wasm-wallet-bindings": "github:PeerPiper/wasm-wallet-bindings#7ebe3d40886b8135b07ba1c4ca43ac4ad5fd69a8",
 		"@stablelib/base64": "^1.0.1",
+		"@ucanto/principal": "^4.2.3",
 		"arbundles": "github:Bundlr-Network/arbundles",
 		"arweave": "^1.11.6",
 		"assert": "^2.0.0",
